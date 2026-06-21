@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import bookingStore from "../state/bookingStore";
@@ -24,7 +24,7 @@ export default function BookingForm({ submitForm }) {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-    defaultValues: { occasion: "Birthday", time: "18:00", guests: 1 },
+    defaultValues: { occasion: "Birthday", time: "", guests: "" },
   });
 
   const selectedDate = watch("date");
@@ -35,7 +35,8 @@ export default function BookingForm({ submitForm }) {
       return;
     }
 
-    setAvailableTimes(updateTimes(availableTimes, { date: selectedDate }).filter((time) => !bookingStore.isTimeTaken(selectedDate, time)));
+    const nextTimes = updateTimes(availableTimes, { date: selectedDate }) || [];
+    setAvailableTimes(nextTimes.filter((time) => !bookingStore.isTimeTaken(selectedDate, time)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDate]);
 
@@ -102,13 +103,20 @@ export default function BookingForm({ submitForm }) {
 
           <label htmlFor="res-time">Choose time</label>
           <select id="res-time" {...register("time")}> 
-            {!selectedDate && <option value="">Select a date first</option>}
-            {selectedDate && availableTimes.length === 0 && <option value="">No available times</option>}
-            {selectedDate && availableTimes.map((time) => (
-              <option key={time} value={time}>
-                {time}
-              </option>
-            ))}
+            {!selectedDate ? (
+              <option value="">Select a date first</option>
+            ) : availableTimes.length === 0 ? (
+              <option value="">No available times</option>
+            ) : (
+              <>
+                <option value="">Select a time</option>
+                {availableTimes.map((time) => (
+                  <option key={time} value={time}>
+                    {time}
+                  </option>
+                ))}
+              </>
+            )}
           </select>
           <span className="error-message">{errors.time?.message}</span>
 
