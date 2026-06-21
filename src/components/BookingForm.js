@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import bookingStore from "../state/bookingStore";
 
 const schema = yup.object({
   date: yup.string().required("Please select a date"),
@@ -16,13 +17,24 @@ export default function BookingForm() {
     handleSubmit,
     register,
     reset,
+    watch,
+    setError,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: { occasion: "Birthday", time: "18:00", guests: 1 },
   });
 
+  const TIMES = ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
+
   const formSubmit = (data) => {
+    // prevent double-booking (in-memory)
+    if (bookingStore.isTimeTaken(data.date, data.time)) {
+      setError("time", { type: "manual", message: "Selected time is already booked for this date" });
+      return;
+    }
+
+    bookingStore.addBooking({ date: data.date, time: data.time });
     setSubmittedData(data);
     reset();
   };
@@ -71,14 +83,35 @@ export default function BookingForm() {
           <span className="error-message">{errors.date?.message}</span>
 
           <label htmlFor="res-time">Choose time</label>
-          <select id="res-time" {...register("time")}>
-            <option>17:00</option>
-            <option>18:00</option>
-            <option>19:00</option>
-            <option>20:00</option>
-            <option>21:00</option>
-            <option>22:00</option>
-          </select>
+          {(() => {
+            const selectedDate = watch("date");
+            const taken = bookingStore.getTimesForDate(selectedDate);
+            const available = TIMES.filter((t) => !taken.includes(t));
+            if (!selectedDate) {
+              return (
+                <select id="res-time" {...register("time")}>
+                  <option value="">Select a date first</option>
+                </select>
+              );
+            }
+            if (available.length === 0) {
+              return (
+                <select id="res-time" {...register("time")}>
+                  <option value="">No available times</option>
+                </select>
+              );
+            }
+
+            return (
+              <select id="res-time" {...register("time")}>
+                {available.map((t) => (
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
+                ))}
+              </select>
+            );
+          })()}
           <span className="error-message">{errors.time?.message}</span>
 
           <label htmlFor="guests">Number of guests</label>
