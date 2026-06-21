@@ -35,7 +35,7 @@ header {
 .header-logo {
   height: 40px;
   width: auto;
-  margin-inline-start: 0 ;
+  margin-inline-start: 0;
 }
 
 .nav-menu {
@@ -224,5 +224,129 @@ h2 {
     margin-top: 30px;
     margin-bottom: -80px;
     width: 100%;
+  }
+}
+
+.special-card {
+  display: grid;
+  grid-template-columns: 31% 31% 31%;
+  gap: 35px;
+  margin-top: 20px;
+}
+.special-card-container {
+  background-color: #edefee;
+  border-radius: 20px 20px 0 0;
+}
+
+.special-card-text {
+  padding: 30px 20px 40px;
+}
+
+.special-card-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.price-tag {
+  color: #ee9972;
+}
+
+.special-card-text p {
+  font-size: 16pt;
+  line-height: 1.2;
+  margin: 30px 0 50px;
+}
+
+.special-card-text h4 {
+  font-size: 16pt;
+  display: flex;
+  align-items: center;
+}
+
+.image-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border-radius: 20px 20px 0 0;
+}
+
+.image-container img {
+  width: 100%;
+}
+
+@media screen and (max-width: 1040px) {
+  .special-card {
+    grid-template-columns: 47% 47%;
+  }
+}
+
+@media screen and (max-width: 659px) {
+  .special-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .special-card-text p,
+  h3 {
+    font-size: smaller;
+  }
+
+  .special-card-text h4 {
+    font-size: smaller;
+  }
+
+  .image-container {
+    height: 200px;
+  }
+}
+
+.specials-section-container {
+  width: 85%;
+  margin: 0 auto;
+  padding: 100px 0;
+}
+
+.specials-section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-menu {
+  padding: 15px 45px;
+}
+
+@media screen and (max-width: 1024px) {
+  .specials-section-container {
+    width: 100%;
+    padding-top: 150px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .specials-section-title h1 {
+    line-height: 0.8;
+    margin: 20px 0 20px;
+    font-size: 50px;
+  }
+
+  .btn-menu {
+    margin-bottom: 30px;
+    font-size: smaller;
+  }
+}
+
+@media screen and (max-width: 852px) {
+  .specials-section-container {
+    padding-top: 100px;
+  }
+}
+
+@media screen and (max-width: 659px) {
+  .specials-section-title {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
