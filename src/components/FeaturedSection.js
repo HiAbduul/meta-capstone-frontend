@@ -43,9 +43,9 @@ const featuredMenu = [
 ];
 
 const Cards = () => {
-  const specialMenusItems = featuredMenu.map((menu) => {
+  const specialMenusItems = featuredMenu.map((menu, index) => {
     return (
-      <div>
+      <div key={index}>
         <div className="special-card-container">
           <div className="image-container">
             <img src={menu.image} alt="Special dessert" />

@@ -1,7 +1,7 @@
-import Logo from "../assets/logo-horizontal.jpg";
 import { IconBurger, IconX } from "@tabler/icons-react";
 import { useState } from "react";
 import { Link } from "react-router";
+import Logo from "../assets/logo-horizontal.jpg";
 
 export default function Header() {
   const [click, setClick] = useState(false);
@@ -27,9 +27,6 @@ export default function Header() {
             </li>
             <li>
               <Link to="/reservations">Reservations</Link>
-            </li>
-            <li>
-              <Link to="#">Order Online</Link>
             </li>
             <li>
               <Link to="#">Login</Link>
