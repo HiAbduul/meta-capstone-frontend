@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import Layout from "./Layout";
 import AboutPage from "./pages/AboutPage";
 import BookingPage from "./pages/BookingPage";
+import ConfirmedBooking from "./pages/ConfirmedBooking";
 import HomePage from "./pages/HomePage";
 import MenuPage from "./pages/MenuPage";
 
@@ -26,6 +27,10 @@ export default function App() {
         {
           path: "/booking",
           element: <BookingPage />,
+        },
+        {
+          path: "/booking/confirmed",
+          element: <ConfirmedBooking />,
         },
       ],
     },

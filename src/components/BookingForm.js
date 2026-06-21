@@ -1,8 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import bookingStore from "../state/bookingStore";
+import { initializeTimes, updateTimes } from "../state/times";
 
 const schema = yup.object({
   date: yup.string().required("Please select a date"),
@@ -11,8 +12,9 @@ const schema = yup.object({
   occasion: yup.string().notRequired(),
 });
 
-export default function BookingForm() {
+export default function BookingForm({ submitForm }) {
   const [submittedData, setSubmittedData] = useState(null);
+  const [availableTimes, setAvailableTimes] = useState(() => initializeTimes());
   const {
     handleSubmit,
     register,
@@ -25,7 +27,17 @@ export default function BookingForm() {
     defaultValues: { occasion: "Birthday", time: "18:00", guests: 1 },
   });
 
-  const TIMES = ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
+  const selectedDate = watch("date");
+
+  useEffect(() => {
+    if (!selectedDate) {
+      setAvailableTimes(initializeTimes());
+      return;
+    }
+
+    setAvailableTimes(updateTimes(availableTimes, { date: selectedDate }).filter((time) => !bookingStore.isTimeTaken(selectedDate, time)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDate]);
 
   const formSubmit = (data) => {
     // prevent double-booking (in-memory)
@@ -35,6 +47,12 @@ export default function BookingForm() {
     }
 
     bookingStore.addBooking({ date: data.date, time: data.time });
+    if (submitForm) {
+      const success = submitForm(data);
+      if (success) {
+        return;
+      }
+    }
     setSubmittedData(data);
     reset();
   };
@@ -83,35 +101,15 @@ export default function BookingForm() {
           <span className="error-message">{errors.date?.message}</span>
 
           <label htmlFor="res-time">Choose time</label>
-          {(() => {
-            const selectedDate = watch("date");
-            const taken = bookingStore.getTimesForDate(selectedDate);
-            const available = TIMES.filter((t) => !taken.includes(t));
-            if (!selectedDate) {
-              return (
-                <select id="res-time" {...register("time")}>
-                  <option value="">Select a date first</option>
-                </select>
-              );
-            }
-            if (available.length === 0) {
-              return (
-                <select id="res-time" {...register("time")}>
-                  <option value="">No available times</option>
-                </select>
-              );
-            }
-
-            return (
-              <select id="res-time" {...register("time")}>
-                {available.map((t) => (
-                  <option key={t} value={t}>
-                    {t}
-                  </option>
-                ))}
-              </select>
-            );
-          })()}
+          <select id="res-time" {...register("time")}> 
+            {!selectedDate && <option value="">Select a date first</option>}
+            {selectedDate && availableTimes.length === 0 && <option value="">No available times</option>}
+            {selectedDate && availableTimes.map((time) => (
+              <option key={time} value={time}>
+                {time}
+              </option>
+            ))}
+          </select>
           <span className="error-message">{errors.time?.message}</span>
 
           <label htmlFor="guests">Number of guests</label>
