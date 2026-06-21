@@ -22,5 +22,3 @@ export function updateTimes(state, action) {
   }
   return getApiTimes(selectedDate);
 }
-
-module.exports = { TIMES, initializeTimes, updateTimes };
