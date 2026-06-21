@@ -1,5 +1,3 @@
-import Footer from "../components/Footer";
-import Header from "../components/Header";
 import image01 from "../assets/images/image-01.jpg";
 import image02 from "../assets/images/image-02.jpg";
 import image03 from "../assets/images/image-03.jpg";
@@ -76,42 +74,34 @@ const menuItems = [
 
 export default function MenuPage() {
   return (
-    <>
-      <Header />
-      <main className="menu-page">
-        <section className="menu-hero">
-          <div className="menu-copy">
-            <span className="eyebrow">Our Menu</span>
-            <h1>Fresh plates designed to share</h1>
-            <p>
-              Discover our curated selection of Mediterranean favorites featuring bright flavors, fresh seafood, and hearty seasonal dishes.
-            </p>
-          </div>
-          <div className="menu-image">
-            <img src={image05} alt="Mediterranean dish" />
-          </div>
-        </section>
+    <main className="menu-page">
+      <section className="menu-hero">
+        <div className="menu-copy">
+          <span className="eyebrow">Our Menu</span>
+          <h1>Fresh plates designed to share</h1>
+          <p>Discover our curated selection of Mediterranean favorites featuring bright flavors, fresh seafood, and hearty seasonal dishes.</p>
+        </div>
+        <div className="menu-image">
+          <img src={image04} alt="Mediterranean dish" />
+        </div>
+      </section>
 
-        <section className="menu-intro">
-          <p>
-            Browse our menu for light starters, savory mains, and shareable plates. Each recipe is crafted with quality ingredients and Mediterranean warmth.
-          </p>
-        </section>
+      <section className="menu-intro">
+        <p>Browse our menu for light starters, savory mains, and shareable plates. Each recipe is crafted with quality ingredients and Mediterranean warmth.</p>
+      </section>
 
-        <section className="menu-grid">
-          {menuItems.map((item, index) => (
-            <article className="menu-card" key={index}>
-              <img src={item.image} alt={item.title} />
-              <div className="menu-card-body">
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-                <span>{item.price}</span>
-              </div>
-            </article>
-          ))}
-        </section>
-      </main>
-      <Footer />
-    </>
+      <section className="menu-grid">
+        {menuItems.map((item, index) => (
+          <article className="menu-card" key={index}>
+            <img src={item.image} alt={item.title} />
+            <div className="menu-card-body">
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <span>{item.price}</span>
+            </div>
+          </article>
+        ))}
+      </section>
+    </main>
   );
 }

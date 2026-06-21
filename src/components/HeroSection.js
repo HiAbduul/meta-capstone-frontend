@@ -12,8 +12,8 @@ export default function HeroSection() {
           <p>
             We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.
           </p>
-          <Link to="/reservations" className="btn btn-primary">
-            Reserve a Table
+          <Link to="/booking" className="btn btn-primary">
+            Book a Table
           </Link>
         </div>
 

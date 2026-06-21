@@ -1,27 +1,34 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
-import HomePage from "./pages/HomePage";
+import Layout from "./Layout";
 import AboutPage from "./pages/AboutPage";
+import BookingPage from "./pages/BookingPage";
+import HomePage from "./pages/HomePage";
 import MenuPage from "./pages/MenuPage";
-// import ReservationsPage from "./pages/ReservationsPage";
 
 export default function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <HomePage />,
+      element: <Layout />,
+      children: [
+        {
+          index: true,
+          element: <HomePage />,
+        },
+        {
+          path: "/about",
+          element: <AboutPage />,
+        },
+        {
+          path: "/menu",
+          element: <MenuPage />,
+        },
+        {
+          path: "/booking",
+          element: <BookingPage />,
+        },
+      ],
     },
-    {
-      path: "/about",
-      element: <AboutPage />,
-    },
-    {
-      path: "/menu",
-      element: <MenuPage />,
-    },
-    // {
-    //   path: "/reservations",
-    //   element: <ReservationsPage />,
-    // },
   ]);
 
   return <RouterProvider router={router} />;

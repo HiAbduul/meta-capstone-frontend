@@ -47,7 +47,7 @@ export default function Footer() {
         </section>
 
         <div className="copyright">
-          <small>&copy; 2026 Little Lemon Ltd. All rights reserved.</small>
+          <small>&copy; 2026 Little Lemon Ltd. All rights reserved. designed by Muhammad A. KAREEM</small>
         </div>
       </div>
     </footer>

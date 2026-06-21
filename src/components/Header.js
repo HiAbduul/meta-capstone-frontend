@@ -1,12 +1,15 @@
 import { IconBurger, IconX } from "@tabler/icons-react";
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import Logo from "../assets/logo-horizontal.jpg";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollY = useRef(0);
+  const location = useLocation();
+
+  const getLinkClass = (path) => (location.pathname === path ? "active" : "");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,29 +55,24 @@ export default function Header() {
           </li>
 
           <li>
-            <Link to="/" onClick={() => setMenuOpen(false)}>
+            <Link className={getLinkClass("/")} to="/" onClick={() => setMenuOpen(false)}>
               Home
             </Link>
           </li>
           <li>
-            <Link to="/about" onClick={() => setMenuOpen(false)}>
+            <Link className={getLinkClass("/about")} to="/about" onClick={() => setMenuOpen(false)}>
               About
             </Link>
           </li>
           <li>
-            <Link to="/menu" onClick={() => setMenuOpen(false)}>
+            <Link className={getLinkClass("/menu")} to="/menu" onClick={() => setMenuOpen(false)}>
               Menu
             </Link>
           </li>
           <li>
-            <Link to="/reservations" onClick={() => setMenuOpen(false)}>
-              Reservations
+            <Link className={getLinkClass("/booking")} to="/booking" onClick={() => setMenuOpen(false)}>
+              Booking
             </Link>
-          </li>
-          <li>
-            <a href="#login" onClick={() => setMenuOpen(false)}>
-              Login
-            </a>
           </li>
         </ul>
       </nav>
