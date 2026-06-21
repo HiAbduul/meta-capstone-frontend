@@ -91,18 +91,22 @@ export default function BookingForm({ submitForm }) {
   }
 
   return (
-    <div className="form">
-      <h1>Book a Table</h1>
+    <section className="form" aria-labelledby="booking-form-heading">
+      <h1 id="booking-form-heading">Book a Table</h1>
       <p>Complete the form below to review and confirm your booking instantly.</p>
 
-      <form onSubmit={handleSubmit(formSubmit)} className="compact-booking-form">
+      <form onSubmit={handleSubmit(formSubmit)} className="compact-booking-form" aria-label="Booking form">
         <fieldset>
+          <legend>Reservation details</legend>
+
           <label htmlFor="res-date">Choose date</label>
-          <input id="res-date" type="date" {...register("date")} />
-          <span className="error-message">{errors.date?.message}</span>
+          <input id="res-date" type="date" aria-describedby="date-error" {...register("date")} />
+          <span id="date-error" className="error-message" role="alert">
+            {errors.date?.message}
+          </span>
 
           <label htmlFor="res-time">Choose time</label>
-          <select id="res-time" {...register("time")}> 
+          <select id="res-time" aria-describedby="time-error" {...register("time")}> 
             {!selectedDate ? (
               <option value="">Select a date first</option>
             ) : availableTimes.length === 0 ? (
@@ -118,11 +122,15 @@ export default function BookingForm({ submitForm }) {
               </>
             )}
           </select>
-          <span className="error-message">{errors.time?.message}</span>
+          <span id="time-error" className="error-message" role="alert">
+            {errors.time?.message}
+          </span>
 
           <label htmlFor="guests">Number of guests</label>
-          <input id="guests" type="number" placeholder="1" min="1" max="10" {...register("guests")} />
-          <span className="error-message">{errors.guests?.message}</span>
+          <input id="guests" type="number" placeholder="1" min="1" max="10" aria-describedby="guests-error" {...register("guests")} />
+          <span id="guests-error" className="error-message" role="alert">
+            {errors.guests?.message}
+          </span>
 
           <label htmlFor="occasion">Occasion</label>
           <select id="occasion" {...register("occasion")}>
@@ -130,9 +138,11 @@ export default function BookingForm({ submitForm }) {
             <option>Anniversary</option>
           </select>
 
-          <input className="booking-btn" type="submit" value="Make Your booking" />
+          <button className="booking-btn" type="submit" aria-label="On Click">
+            Make Your booking
+          </button>
         </fieldset>
       </form>
-    </div>
+    </section>
   );
 }

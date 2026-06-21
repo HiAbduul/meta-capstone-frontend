@@ -6,15 +6,15 @@ import image3 from "../assets/images/image-04.jpg";
 
 export default function FeaturedSection() {
   return (
-    <div className="specials-section-container">
+    <section className="specials-section-container" aria-labelledby="specials-heading">
       <div className="specials-section-title">
-        <h1>This Week's Specials</h1>
+        <h2 id="specials-heading">This Week's Specials</h2>
         <div className="btn-container">
           <button className="btn btn-menu">Online Menu</button>
         </div>
       </div>
       <Cards />
-    </div>
+    </section>
   );
 }
 
