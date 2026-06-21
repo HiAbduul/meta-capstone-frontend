@@ -1,5 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
+import MenuPage from "./pages/MenuPage";
 // import ReservationsPage from "./pages/ReservationsPage";
 
 export default function App() {
@@ -7,6 +9,14 @@ export default function App() {
     {
       path: "/",
       element: <HomePage />,
+    },
+    {
+      path: "/about",
+      element: <AboutPage />,
+    },
+    {
+      path: "/menu",
+      element: <MenuPage />,
     },
     // {
     //   path: "/reservations",

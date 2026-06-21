@@ -16,7 +16,7 @@ export default function Footer() {
           <div className="locations">
             <h3>Locations</h3>
             <ul>
-              <li>Accra (Main)</li>
+              <li>Erbil (Main)</li>
               <li>Kumasi</li>
               <li>Takoradi</li>
               <li>Tamale</li>

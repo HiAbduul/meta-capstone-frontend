@@ -1,13 +1,34 @@
 import { IconBurger, IconX } from "@tabler/icons-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router";
 import Logo from "../assets/logo-horizontal.jpg";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY <= 100) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY.current && !menuOpen) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [menuOpen]);
 
   return (
-    <header className="site-header">
+    <header className={`site-header ${isVisible ? "" : "hidden"}`}>
       <Link to="/" className="header-brand" onClick={() => setMenuOpen(false)}>
         <img src={Logo} alt="Little Lemon logo" className="header-logo" />
       </Link>
@@ -36,14 +57,14 @@ export default function Header() {
             </Link>
           </li>
           <li>
-            <a href="#about" onClick={() => setMenuOpen(false)}>
+            <Link to="/about" onClick={() => setMenuOpen(false)}>
               About
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#menu" onClick={() => setMenuOpen(false)}>
+            <Link to="/menu" onClick={() => setMenuOpen(false)}>
               Menu
-            </a>
+            </Link>
           </li>
           <li>
             <Link to="/reservations" onClick={() => setMenuOpen(false)}>
